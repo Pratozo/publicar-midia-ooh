@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cobertura — Publicar Mídia OOH</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css?v=10" />
+  <style>
+    /* ─── STATS ─── */
+    .cobertura-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 48px;
+    }
+    .cob-stat {
+      flex: 1 1 calc(50% - 8px);
+      min-width: 200px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 24px 28px;
+      background: rgba(255,140,0,0.06);
+      border-left: 4px solid var(--laranja);
+      border-radius: 0 4px 4px 0;
+    }
+    .cob-stat-num {
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--laranja);
+      line-height: 1;
+      white-space: nowrap;
+    }
+    .cob-stat-info h4 {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--preto);
+      margin-bottom: 4px;
+    }
+    .cob-stat-info p {
+      font-size: 13px;
+      color: var(--cinza-med);
+      line-height: 1.5;
+    }
+
+    /* ─── MAPA INTERATIVO ─── */
+    .mapa-interativo {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 28px;
+      align-items: start;
+    }
+
+    #mapa-brasil {
+      min-height: 560px;
+      border-radius: 4px;
+      overflow: hidden;
+      border: 1px solid var(--borda);
+      position: relative;
+      background: var(--cinza-bg);
+    }
+
+    .mapa-loading {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      background: var(--cinza-bg);
+      font-size: 12px;
+      color: var(--cinza-cla);
+      font-weight: 700;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      z-index: 1;
+    }
+
+    /* ─── REGION SIDEBAR ─── */
+    .regiao-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .regiao-sidebar-titulo {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--cinza-cla);
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--borda);
+      margin-bottom: 2px;
+    }
+    .regiao-card {
+      padding: 18px 20px;
+      border: 1px solid var(--borda);
+      border-radius: 4px;
+      cursor: pointer;
+      transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+      user-select: none;
+    }
+    .regiao-card:hover {
+      border-color: var(--laranja);
+      box-shadow: 0 4px 16px rgba(255,140,0,0.08);
+    }
+    .regiao-card.ativo {
+      border-color: var(--laranja);
+      background: rgba(255,140,0,0.06);
+      box-shadow: 0 4px 20px rgba(255,140,0,0.12);
+    }
+    .regiao-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+    .regiao-card h4 {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--preto);
+      transition: color 0.2s;
+    }
+    .regiao-card.ativo h4 { color: var(--laranja); }
+    .regiao-card p {
+      font-size: 12px;
+      color: var(--cinza-med);
+      line-height: 1.55;
+    }
+    .regiao-card .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      background: var(--laranja);
+      color: var(--branco);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-radius: 2px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .regiao-hint {
+      margin-top: 4px;
+      font-size: 11px;
+      color: var(--cinza-cla);
+      text-align: center;
+      letter-spacing: 0.03em;
+    }
+
+    /* ─── PARÁ DESTAQUE ─── */
+    .bloco-dark { background: var(--preto); }
+    .para-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .para-text p {
+      font-size: 16px;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+    .para-text p strong { color: var(--branco); }
+    .para-nums {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-top: 40px;
+    }
+    .para-num-item {
+      padding: 24px 20px;
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 4px;
+    }
+    .para-num-item .num {
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--laranja);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .para-num-item .label {
+      font-size: 12px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.50);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .para-visual {
+      background: rgba(255,255,255,0.04);
+      border: 1px dashed rgba(255,255,255,0.12);
+      border-radius: 4px;
+      aspect-ratio: 4/5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.20);
+      position: relative;
+      overflow: hidden;
+    }
+    .para-visual::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0;
+      width: 4px; height: 100%;
+      background: var(--laranja);
+    }
+
+    .disclaimer {
+      font-size: 12px;
+      color: var(--cinza-cla);
+      line-height: 1.6;
+      padding: 20px 24px;
+      background: var(--cinza-bg);
+      border-left: 3px solid var(--borda);
+      border-radius: 0 4px 4px 0;
+      margin-top: 32px;
+    }
+
+    /* ─── RESPONSIVO ─── */
+    @media (max-width: 960px) {
+      .mapa-interativo { grid-template-columns: 1fr; }
+      #mapa-brasil { min-height: 380px; }
+      .regiao-sidebar { flex-direction: row; flex-wrap: wrap; }
+      .regiao-card { flex: 1 1 calc(50% - 5px); min-width: 130px; }
+      .cobertura-stats { gap: 12px; }
+      .cob-stat { flex: 1 1 100%; }
+      .para-content { grid-template-columns: 1fr; gap: 40px; }
+      .para-visual { display: none; }
+    }
+    @media (max-width: 768px) {
+      #mapa-brasil { min-height: 300px; }
+      .cob-stat { padding: 20px; }
+      .cob-stat-num { font-size: 26px; }
+      .para-nums { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 480px) {
+      .regiao-card { flex: 1 1 100%; }
+      .para-nums { grid-template-columns: 1fr; gap: 12px; }
+      .cob-stat { flex-direction: column; gap: 10px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a class="nav-logo" href="index.html">
+        <img src="../imagens de conteudo png/Publicar midia/ChatGPT Image 26 de fev. de 2026, 14_48_48.png" alt="Publicar Mídia OOH" />
+        <span class="nav-logo-nome">Publicar Mídia <span>OOH</span></span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="quem-somos.html">Quem Somos</a></li>
+        <li><a href="formatos.html">Nossos Formatos</a></li>
+        <li><a href="cobertura.html" class="active">Cobertura</a></li>
+        <li><a href="clientes.html">Clientes</a></li>
+        <li><a href="contato.html" class="btn-nav">Fale Conosco</a></li>
+      </ul>
+      <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="quem-somos.html" onclick="toggleMenu()">Quem Somos</a>
+    <a href="formatos.html" onclick="toggleMenu()">Nossos Formatos</a>
+    <a href="cobertura.html" class="active" onclick="toggleMenu()">Cobertura</a>
+    <a href="clientes.html" onclick="toggleMenu()">Clientes</a>
+    <a href="contato.html" class="btn-nav-mobile" onclick="toggleMenu()">Fale Conosco</a>
+  </div>
+
+  <div class="page-header">
+    <div class="page-header-inner">
+      <div class="eyebrow">Cobertura</div>
+      <h1>Presença real.<br />De Norte a Sul.</h1>
+      <p>Operamos em todo o Brasil, com capilaridade regional e expertise local em cada praça que atendemos.</p>
+    </div>
+  </div>
+
+  <!-- COBERTURA NACIONAL -->
+  <section class="bloco white">
+    <div class="container">
+      <div class="eyebrow">Abrangência</div>
+      <h2 class="section-title">Todo o território.<br />Uma única operação.</h2>
+      <p style="font-size:16px; color:var(--cinza-med); line-height:1.8; max-width:760px;">
+        A Publicar Mídia OOH opera em todo o Brasil, com presença territorial real em diferentes regiões do país. Para agências e anunciantes, isso significa um único interlocutor independente de quantas praças ou formatos a campanha envolver.
+      </p>
+      <p style="font-size:16px; color:var(--cinza-med); line-height:1.8; max-width:760px; margin-top:16px;">
+        Nossa capilaridade é construída por meio de <strong style="color:var(--preto)">operação própria e parcerias homologadas</strong> — garantindo execução real, comprovada e rastreável em cada ponto do país.
+      </p>
+      <div class="cobertura-stats">
+        <div class="cob-stat">
+          <div class="cob-stat-num">Brasil</div>
+          <div class="cob-stat-info">
+            <h4>Cobertura nacional</h4>
+            <p>Presença em todas as regiões do território brasileiro</p>
+          </div>
+        </div>
+        <div class="cob-stat">
+          <div class="cob-stat-num">144+</div>
+          <div class="cob-stat-info">
+            <h4>Municípios no Pará</h4>
+            <p>Do interior à capital Belém, com formatos exclusivos da região Norte</p>
+          </div>
+        </div>
+        <div class="cob-stat">
+          <div class="cob-stat-num">+3k</div>
+          <div class="cob-stat-info">
+            <h4>Telas Indoor no Brasil</h4>
+            <p>Elevadores comerciais e residenciais em todo o país</p>
+          </div>
+        </div>
+        <div class="cob-stat">
+          <div class="cob-stat-num">20</div>
+          <div class="cob-stat-info">
+            <h4>Anos de mercado</h4>
+            <p>Experiência real em cada praça que operamos</p>
+          </div>
+        </div>
+      </div>
+      <p class="disclaimer">Atuação por meio de operação própria e parcerias homologadas, com presença em diferentes regiões do Brasil, conforme planejamento e disponibilidade local. Consulte disponibilidade por praça.</p>
+    </div>
+  </section>
+
+  <!-- MAPA INTERATIVO -->
+  <section class="bloco gray">
+    <div class="container">
+      <div class="eyebrow">Mapa interativo</div>
+      <h2 class="section-title">Explore nossa cobertura.</h2>
+      <p class="section-sub">Clique em uma região para visualizar os estados atendidos no mapa.</p>
+      <div class="mapa-interativo">
+
+        <!-- MAPA -->
+        <div id="mapa-brasil">
+          <div class="mapa-loading" id="mapa-loading">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(255,140,0,0.4)" stroke-width="1.5">
+              <path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+              <path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+            </svg>
+            Carregando mapa...
+          </div>
+        </div>
+
+        <!-- CARDS DE REGIÕES -->
+        <div class="regiao-sidebar">
+          <div class="regiao-sidebar-titulo">Regiões do Brasil</div>
+
+          <div class="regiao-card" data-regiao="norte" onclick="selecionarRegiao('norte', this)">
+            <div class="regiao-card-header">
+              <h4>Norte</h4>
+              <span class="badge">Força regional</span>
+            </div>
+            <p>Belém e 144+ municípios do Pará, com formatos exclusivos como Lanchadoor e Barcodoor</p>
+          </div>
+
+          <div class="regiao-card" data-regiao="nordeste" onclick="selecionarRegiao('nordeste', this)">
+            <div class="regiao-card-header">
+              <h4>Nordeste</h4>
+            </div>
+            <p>Presença nas principais capitais e praças do Nordeste brasileiro</p>
+          </div>
+
+          <div class="regiao-card" data-regiao="centroeste" onclick="selecionarRegiao('centroeste', this)">
+            <div class="regiao-card-header">
+              <h4>Centro-Oeste</h4>
+            </div>
+            <p>Cobertura nos principais mercados do Centro-Oeste do Brasil</p>
+          </div>
+
+          <div class="regiao-card" data-regiao="sudeste" onclick="selecionarRegiao('sudeste', this)">
+            <div class="regiao-card-header">
+              <h4>Sudeste</h4>
+            </div>
+            <p>Presença nos grandes centros urbanos com portfólio completo de formatos</p>
+          </div>
+
+          <div class="regiao-card" data-regiao="sul" onclick="selecionarRegiao('sul', this)">
+            <div class="regiao-card-header">
+              <h4>Sul</h4>
+            </div>
+            <p>Atuação nas principais cidades e praças da região Sul do Brasil</p>
+          </div>
+
+          <p class="regiao-hint">Clique novamente para desfazer a seleção</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DESTAQUE PARÁ -->
+  <section class="bloco bloco-dark">
+    <div class="container">
+      <div class="para-content">
+        <div class="para-text">
+          <div class="eyebrow">Força regional</div>
+          <h2 class="section-title" style="color:var(--branco)">O Pará<br />é nossa casa.</h2>
+          <p>No Pará, nossa operação vai além das grandes capitais. Atendemos <strong>mais de 144 municípios</strong> — do interior profundo à capital Belém — com formatos exclusivos que só existem na região Norte.</p>
+          <p>Lanchadoor, Barcodoor, Outdoor flutuante — formatos únicos que conectam marcas às pessoas em um dos mercados mais singulares do Brasil.</p>
+          <div class="para-nums">
+            <div class="para-num-item">
+              <div class="num">144+</div>
+              <div class="label">Municípios atendidos</div>
+            </div>
+            <div class="para-num-item">
+              <div class="num">+120</div>
+              <div class="label">Telas Indoor em Belém</div>
+            </div>
+            <div class="para-num-item">
+              <div class="num">3</div>
+              <div class="label">Formatos exclusivos da região</div>
+            </div>
+            <div class="para-num-item">
+              <div class="num">20</div>
+              <div class="label">Anos de presença local</div>
+            </div>
+          </div>
+        </div>
+        <div class="para-visual">Inserir foto Belém / Pará</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="bloco white" style="text-align:center;">
+    <div class="container">
+      <div class="eyebrow" style="justify-content:center;">Próximo passo</div>
+      <h2 class="section-title">Leve sua campanha<br />a qualquer praça.</h2>
+      <p class="section-sub" style="margin: 0 auto 40px;">Consulte disponibilidade e formatos por região. Um único contato. Um único PI. Uma única nota fiscal.</p>
+      <div class="btn-group" style="justify-content:center;">
+        <a href="contato.html" class="btn-primary">Solicitar cobertura por praça →</a>
+        <a href="formatos.html" class="btn-outline">Ver formatos disponíveis</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <img src="../imagens de conteudo png/Publicar midia/ChatGPT Image 26 de fev. de 2026, 14_48_48.png" alt="Publicar Mídia OOH" style="filter: brightness(0) invert(1);" />
+          <p class="footer-tagline">Levando o seu sucesso<br />a qualquer lugar do Brasil.</p>
+        </div>
+        <div class="footer-nav">
+          <div class="footer-col">
+            <h4>Navegação</h4>
+            <ul>
+              <li><a href="quem-somos.html">Quem Somos</a></li>
+              <li><a href="formatos.html">Nossos Formatos</a></li>
+              <li><a href="cobertura.html">Cobertura</a></li>
+              <li><a href="clientes.html">Clientes</a></li>
+              <li><a href="contato.html">Contato</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Contato</h4>
+            <ul>
+              <li><a href="https://wa.me/5591982523057" target="_blank">(91) 98252-3057</a></li>
+              <li><a href="mailto:publicarmidiaooh@gmail.com">publicarmidiaooh@gmail.com</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 Publicar Mídia OOH. CNPJ 51.040.875/0001-58</p>
+        <span class="footer-inst">Publicar Mídia OOH | OOH &amp; DOOH | Brasil</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+
+  <script>
+    let mapaGoogle = null;
+    let regiaoAtiva = null;
+
+    const ESTADOS_REGIAO = {
+      norte:      ['AM', 'PA', 'RR', 'AP', 'AC', 'RO', 'TO'],
+      nordeste:   ['MA', 'PI', 'CE', 'RN', 'PB', 'PE', 'AL', 'SE', 'BA'],
+      centroeste: ['MT', 'MS', 'GO', 'DF'],
+      sudeste:    ['SP', 'RJ', 'MG', 'ES'],
+      sul:        ['PR', 'SC', 'RS']
+    };
+
+    const BOUNDS_REGIAO = {
+      norte:      { north: 5.3,   south: -13.7, east: -44.4, west: -73.8 },
+      nordeste:   { north: 5.3,   south: -18.4, east: -34.7, west: -48.6 },
+      centroeste: { north:  -7.4, south: -24.0, east: -45.0, west: -60.6 },
+      sudeste:    { north: -14.2, south: -24.5, east: -39.7, west: -51.5 },
+      sul:        { north: -22.5, south: -33.8, east: -48.0, west: -57.7 }
+    };
+
+    const ESTILO_MAPA = [
+      { elementType: 'geometry', stylers: [{ color: '#F0F0F0' }] },
+      { elementType: 'labels', stylers: [{ visibility: 'off' }] },
+      { featureType: 'administrative.country', elementType: 'geometry.stroke',
+        stylers: [{ color: '#888888' }, { weight: 1.5 }] },
+      { featureType: 'road', stylers: [{ visibility: 'off' }] },
+      { featureType: 'poi', stylers: [{ visibility: 'off' }] },
+      { featureType: 'transit', stylers: [{ visibility: 'off' }] },
+      { featureType: 'water', elementType: 'geometry', stylers: [{ color: '#B8D4E8' }] }
+    ];
+
+    function initMap() {
+      const el = document.getElementById('mapa-brasil');
+      const loading = document.getElementById('mapa-loading');
+
+      mapaGoogle = new google.maps.Map(el, {
+        center: { lat: -14.5, lng: -52.0 },
+        zoom: 4,
+        styles: ESTILO_MAPA,
+        mapTypeId: 'roadmap',
+        mapTypeControl: false,
+        streetViewControl: false,
+        fullscreenControl: false,
+        zoomControl: true,
+        zoomControlOptions: {
+          position: google.maps.ControlPosition.RIGHT_BOTTOM
+        }
+      });
+
+      mapaGoogle.data.loadGeoJson(
+        'https://raw.githubusercontent.com/codeforamerica/click_that_hood/master/public/data/brazil-states.geojson',
+        null,
+        function() {
+          if (loading) loading.style.display = 'none';
+          atualizarEstiloEstados();
+        }
+      );
+    }
+
+    function atualizarEstiloEstados() {
+      if (!mapaGoogle) return;
+      mapaGoogle.data.setStyle(function(feature) {
+        const sigla = feature.getProperty('sigla');
+        const ativo = regiaoAtiva && ESTADOS_REGIAO[regiaoAtiva].includes(sigla);
+        return {
+          fillColor:   ativo ? '#FF8C00' : '#CCCCCC',
+          fillOpacity: ativo ? 0.55 : 0.30,
+          strokeColor: ativo ? '#FF8C00' : '#999999',
+          strokeWeight: ativo ? 2 : 0.8
+        };
+      });
+    }
+
+    function selecionarRegiao(regiao, card) {
+      if (regiaoAtiva === regiao) {
+        regiaoAtiva = null;
+        document.querySelectorAll('.regiao-card').forEach(c => c.classList.remove('ativo'));
+        mapaGoogle.setCenter({ lat: -14.5, lng: -52.0 });
+        mapaGoogle.setZoom(4);
+      } else {
+        regiaoAtiva = regiao;
+        document.querySelectorAll('.regiao-card').forEach(c => c.classList.remove('ativo'));
+        card.classList.add('ativo');
+        const b = BOUNDS_REGIAO[regiao];
+        mapaGoogle.fitBounds(new google.maps.LatLngBounds(
+          { lat: b.south, lng: b.west },
+          { lat: b.north, lng: b.east }
+        ));
+      }
+      atualizarEstiloEstados();
+    }
+  </script>
+
+  <!--
+    ════════════════════════════════════════════════════════
+    GOOGLE MAPS API — CONFIGURAÇÃO
+    ════════════════════════════════════════════════════════
+    1. Acesse: https://console.cloud.google.com
+    2. Ative a API: "Maps JavaScript API"
+    3. Crie ou copie sua chave de API
+    4. Substitua SUA_CHAVE_API abaixo pela chave real
+    5. Restrinja a chave ao domínio do site para segurança
+    ════════════════════════════════════════════════════════
+  -->
+  <script async
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCUhaF3lxqJXKQjdfxJlIp0QC8NVQ86uac&callback=initMap&language=pt-BR&region=BR">
+  </script>
+
+</body>
+</html>

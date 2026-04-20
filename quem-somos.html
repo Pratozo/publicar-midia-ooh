@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quem Somos — Publicar Mídia OOH</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css?v=10" />
+  <style>
+    .sobre-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+    .sobre-grid p { font-size: 16px; color: var(--cinza-med); line-height: 1.85; margin-bottom: 20px; }
+    .sobre-grid p strong { color: var(--preto); font-weight: 700; }
+    .stats-row { display: flex; gap: 40px; flex-wrap: wrap; margin-top: 48px; padding-top: 40px; border-top: 1px solid var(--borda); }
+
+    .pilares-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .pilar {
+      padding: 36px 28px;
+      border: 1px solid var(--borda);
+      border-radius: 4px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .pilar:hover { border-color: var(--laranja); box-shadow: 0 4px 20px rgba(255,140,0,0.08); }
+    .pilar-icon {
+      width: 48px; height: 48px;
+      background: rgba(255,140,0,0.10);
+      border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 20px;
+    }
+    .pilar-icon svg { width: 24px; height: 24px; stroke: var(--laranja); fill: none; stroke-width: 2; }
+    .pilar h3 { font-size: 17px; font-weight: 800; color: var(--preto); margin-bottom: 10px; }
+    .pilar p { font-size: 14px; color: var(--cinza-med); line-height: 1.7; }
+
+    .img-placeholder {
+      width: 100%; border-radius: 4px;
+      background: var(--cinza-bg);
+      border: 2px dashed var(--borda);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--cinza-cla);
+      position: relative; overflow: hidden;
+    }
+    .img-placeholder::before {
+      content: ''; position: absolute;
+      left: 0; top: 0; width: 4px; height: 100%;
+      background: var(--laranja);
+    }
+    .img-p1 { aspect-ratio: 4/5; margin-bottom: 12px; }
+    .img-p2 { aspect-ratio: 16/9; }
+
+    @media (max-width: 960px) {
+      .sobre-grid { grid-template-columns: 1fr; gap: 40px; }
+      .pilares-grid { grid-template-columns: 1fr 1fr; }
+      .sobre-grid .sobre-visual { display: none; }
+      .stats-row { gap: 24px; }
+    }
+    @media (max-width: 768px) {
+      .pilares-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
+      .pilar { padding: 28px 20px; }
+    }
+    @media (max-width: 480px) {
+      .pilares-grid { grid-template-columns: 1fr; }
+      .stats-row { flex-direction: column; gap: 20px; padding-top: 28px; margin-top: 32px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a class="nav-logo" href="index.html">
+        <img src="../imagens de conteudo png/Publicar midia/ChatGPT Image 26 de fev. de 2026, 14_48_48.png" alt="Publicar Mídia OOH" />
+        <span class="nav-logo-nome">Publicar Mídia <span>OOH</span></span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="quem-somos.html" class="active">Quem Somos</a></li>
+        <li><a href="formatos.html">Nossos Formatos</a></li>
+        <li><a href="cobertura.html">Cobertura</a></li>
+        <li><a href="clientes.html">Clientes</a></li>
+        <li><a href="contato.html" class="btn-nav">Fale Conosco</a></li>
+      </ul>
+      <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="quem-somos.html" class="active" onclick="toggleMenu()">Quem Somos</a>
+    <a href="formatos.html" onclick="toggleMenu()">Nossos Formatos</a>
+    <a href="cobertura.html" onclick="toggleMenu()">Cobertura</a>
+    <a href="clientes.html" onclick="toggleMenu()">Clientes</a>
+    <a href="contato.html" class="btn-nav-mobile" onclick="toggleMenu()">Fale Conosco</a>
+  </div>
+
+  <div class="page-header">
+    <div class="page-header-inner">
+      <div class="eyebrow">Quem Somos</div>
+      <h1>Uma plataforma.<br />Todo o Brasil.</h1>
+      <p>Há 20 anos conectando marcas às pessoas no cotidiano das cidades brasileiras.</p>
+    </div>
+  </div>
+
+  <!-- SOBRE PRINCIPAL -->
+  <section class="bloco white">
+    <div class="container">
+      <div class="sobre-grid">
+        <div>
+          <div class="eyebrow">Nossa história</div>
+          <h2 class="section-title">Presença real.<br />Execução comprovada.</h2>
+          <p>A <strong>Publicar Mídia OOH</strong> é uma plataforma nacional de mídia exterior com operação real, territorial e urbana em todo o Brasil. Conectamos marcas às pessoas no cotidiano das cidades, por meio de mídias exteriores físicas e digitais, integradas aos fluxos urbanos, mobilidade e espaços públicos reais.</p>
+          <p>Nossa comunicação é baseada em <strong>presença territorial</strong>, execução comprovada e impacto urbano real — não em conceitos abstratos ou futuristas.</p>
+          <p>Para agências e anunciantes, somos um <strong>único ponto de contato</strong> para todas as praças e todos os formatos. Um PI. Uma NF. Zero burocracia. Independente de quantos formatos ou regiões a campanha envolver, tudo passa por nós.</p>
+          <div class="stats-row">
+            <div class="stat-item">
+              <div class="stat-num">20</div>
+              <div class="stat-label">anos de mercado</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-num">144+</div>
+              <div class="stat-label">municípios no Pará</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-num">+3k</div>
+              <div class="stat-label">telas Indoor no Brasil</div>
+            </div>
+          </div>
+        </div>
+        <div class="sobre-visual">
+          <div class="img-placeholder img-p1">Inserir foto urbana</div>
+          <div class="img-placeholder img-p2">Inserir foto painel</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PILARES -->
+  <section class="bloco gray">
+    <div class="container">
+      <div class="eyebrow">Nosso posicionamento</div>
+      <h2 class="section-title">O que nos define.</h2>
+      <p class="section-sub">Não somos uma empresa de tecnologia, nem um agregador digital. Somos uma operadora de mídia com presença real nas cidades brasileiras.</p>
+      <div class="pilares-grid">
+        <div class="pilar">
+          <div class="pilar-icon">
+            <svg viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          </div>
+          <h3>Plataforma Nacional</h3>
+          <p>Presença real em todo o Brasil, com capilaridade regional e expertise local em cada praça que atendemos.</p>
+        </div>
+        <div class="pilar">
+          <div class="pilar-icon">
+            <svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+          <h3>Um único interlocutor</h3>
+          <p>Centralizamos todos os formatos e praças em uma única operação. Um PI, uma NF — sem burocracia para a agência.</p>
+        </div>
+        <div class="pilar">
+          <div class="pilar-icon">
+            <svg viewBox="0 0 24 24"><path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+          </div>
+          <h3>Força Regional</h3>
+          <p>No Pará, atendemos 144+ municípios com formatos exclusivos da região — do interior à capital Belém.</p>
+        </div>
+        <div class="pilar">
+          <div class="pilar-icon">
+            <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          </div>
+          <h3>OOH e DOOH integrados</h3>
+          <p>Combinamos mídia exterior tradicional e digital em uma única proposta — da empena ao painel de LED.</p>
+        </div>
+        <div class="pilar">
+          <div class="pilar-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+          </div>
+          <h3>Foco em agências</h3>
+          <p>Nosso principal cliente é a agência. Falamos a mesma língua, respeitamos os prazos e entregamos o que foi comprado.</p>
+        </div>
+        <div class="pilar">
+          <div class="pilar-icon">
+            <svg viewBox="0 0 24 24"><path d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
+          </div>
+          <h3>Operação urbana real</h3>
+          <p>Não somos empresa de tecnologia. Somos presença nas ruas, nas avenidas, nos ônibus e nos espaços públicos do Brasil.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="bloco white" style="text-align: center;">
+    <div class="container">
+      <div class="eyebrow" style="justify-content: center;">Próximo passo</div>
+      <h2 class="section-title">Conheça nossos formatos.</h2>
+      <p class="section-sub" style="margin: 0 auto 40px;">30+ formatos de mídia exterior disponíveis em todo o Brasil. De outdoor a DOOH, de busdoor a indoor.</p>
+      <div class="btn-group" style="justify-content: center;">
+        <a href="formatos.html" class="btn-primary">Ver todos os formatos →</a>
+        <a href="contato.html" class="btn-outline">Fale conosco</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <img src="../imagens de conteudo png/Publicar midia/ChatGPT Image 26 de fev. de 2026, 14_48_48.png" alt="Publicar Mídia OOH" style="filter: brightness(0) invert(1);" />
+          <p class="footer-tagline">Levando o seu sucesso<br />a qualquer lugar do Brasil.</p>
+        </div>
+        <div class="footer-nav">
+          <div class="footer-col">
+            <h4>Navegação</h4>
+            <ul>
+              <li><a href="quem-somos.html">Quem Somos</a></li>
+              <li><a href="formatos.html">Nossos Formatos</a></li>
+              <li><a href="cobertura.html">Cobertura</a></li>
+              <li><a href="clientes.html">Clientes</a></li>
+              <li><a href="contato.html">Contato</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Contato</h4>
+            <ul>
+              <li><a href="https://wa.me/5591982523057" target="_blank">(91) 98252-3057</a></li>
+              <li><a href="mailto:publicarmidiaooh@gmail.com">publicarmidiaooh@gmail.com</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 Publicar Mídia OOH. CNPJ 51.040.875/0001-58</p>
+        <span class="footer-inst">Publicar Mídia OOH | OOH &amp; DOOH | Brasil</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>

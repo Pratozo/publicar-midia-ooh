@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contato — Publicar Mídia OOH</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css?v=10" />
+  <style>
+    .contato-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    /* Canais */
+    .canal-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      padding: 32px 28px;
+      border: 1px solid var(--borda);
+      border-radius: 4px;
+      text-decoration: none;
+      transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+      margin-bottom: 16px;
+    }
+
+    .canal-card:hover {
+      border-color: var(--laranja);
+      box-shadow: 0 4px 20px rgba(255,140,0,0.10);
+      transform: translateY(-2px);
+    }
+
+    .canal-card.primary {
+      background: var(--laranja);
+      border-color: var(--laranja);
+    }
+
+    .canal-card.primary:hover {
+      opacity: 0.92;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(255,140,0,0.30);
+    }
+
+    .canal-icon {
+      width: 52px; height: 52px;
+      min-width: 52px;
+      border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .canal-icon.whatsapp {
+      background: rgba(255,255,255,0.20);
+    }
+
+    .canal-icon.email {
+      background: rgba(255,140,0,0.08);
+    }
+
+    .canal-icon svg {
+      width: 26px; height: 26px;
+      fill: none; stroke-width: 2;
+    }
+
+    .canal-card.primary .canal-icon svg { stroke: var(--branco); }
+    .canal-card:not(.primary) .canal-icon svg { stroke: var(--laranja); }
+
+    .canal-info h3 {
+      font-size: 17px;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    .canal-card.primary .canal-info h3 { color: var(--branco); }
+    .canal-card:not(.primary) .canal-info h3 { color: var(--preto); }
+
+    .canal-info p {
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .canal-card.primary .canal-info p { color: rgba(255,255,255,0.80); }
+    .canal-card:not(.primary) .canal-info p { color: var(--cinza-med); }
+
+    .canal-info .valor {
+      font-size: 16px;
+      font-weight: 700;
+      margin-top: 6px;
+    }
+
+    .canal-card.primary .canal-info .valor { color: var(--branco); }
+    .canal-card:not(.primary) .canal-info .valor { color: var(--laranja); }
+
+    /* Formulário */
+    .form-wrap {
+      background: var(--cinza-bg);
+      border-radius: 4px;
+      padding: 40px 36px;
+      border: 1px solid var(--borda);
+    }
+
+    .form-wrap h3 {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--preto);
+      margin-bottom: 8px;
+    }
+
+    .form-wrap .form-sub {
+      font-size: 14px;
+      color: var(--cinza-med);
+      margin-bottom: 28px;
+      line-height: 1.6;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--cinza-esc);
+      margin-bottom: 8px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 13px 16px;
+      border: 1px solid var(--borda);
+      border-radius: 4px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 14px;
+      color: var(--preto);
+      background: var(--branco);
+      outline: none;
+      transition: border-color 0.2s;
+      -webkit-appearance: none;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--laranja);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .btn-form {
+      width: 100%;
+      background: var(--laranja);
+      color: var(--branco);
+      padding: 16px;
+      border: none;
+      border-radius: 4px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      margin-top: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+
+    .btn-form:hover { opacity: 0.88; }
+
+    .form-note {
+      font-size: 11px;
+      color: var(--cinza-cla);
+      text-align: center;
+      margin-top: 14px;
+      line-height: 1.6;
+    }
+
+    /* Info extra */
+    .info-strip {
+      display: flex;
+      gap: 40px;
+      flex-wrap: wrap;
+      padding-top: 40px;
+      margin-top: 40px;
+      border-top: 1px solid var(--borda);
+    }
+
+    .info-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .info-item-icon {
+      width: 36px; height: 36px;
+      min-width: 36px;
+      background: rgba(255,140,0,0.08);
+      border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .info-item-icon svg {
+      width: 18px; height: 18px;
+      stroke: var(--laranja); fill: none; stroke-width: 2;
+    }
+
+    .info-item h4 {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--preto);
+      margin-bottom: 2px;
+    }
+
+    .info-item p {
+      font-size: 13px;
+      color: var(--cinza-med);
+      line-height: 1.5;
+    }
+
+    /* Bloco escuro */
+    .bloco-dark { background: var(--preto); }
+
+    .razoes-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .razao-item {
+      padding: 28px 24px;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 4px;
+    }
+
+    .razao-num {
+      font-size: 40px;
+      font-weight: 800;
+      color: var(--laranja);
+      line-height: 1;
+      margin-bottom: 12px;
+    }
+
+    .razao-item h4 {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--branco);
+      margin-bottom: 8px;
+    }
+
+    .razao-item p {
+      font-size: 13px;
+      color: rgba(255,255,255,0.50);
+      line-height: 1.6;
+    }
+
+    @media (max-width: 960px) {
+      .contato-grid { grid-template-columns: 1fr; gap: 40px; }
+      .razoes-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
+      .canal-card { padding: 24px 20px; }
+    }
+    @media (max-width: 768px) {
+      .razoes-grid { grid-template-columns: 1fr 1fr; }
+      .form-wrap { padding: 32px 24px; }
+      .info-strip { gap: 20px; }
+    }
+    @media (max-width: 480px) {
+      .razoes-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .form-wrap { padding: 24px 20px; }
+      .canal-card { padding: 20px 16px; gap: 14px; }
+      .canal-icon { width: 44px; height: 44px; min-width: 44px; }
+      .info-strip { flex-direction: column; gap: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a class="nav-logo" href="index.html">
+        <img src="../imagens de conteudo png/Publicar midia/ChatGPT Image 26 de fev. de 2026, 14_48_48.png" alt="Publicar Mídia OOH" />
+        <span class="nav-logo-nome">Publicar Mídia <span>OOH</span></span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="quem-somos.html">Quem Somos</a></li>
+        <li><a href="formatos.html">Nossos Formatos</a></li>
+        <li><a href="cobertura.html">Cobertura</a></li>
+        <li><a href="clientes.html">Clientes</a></li>
+        <li><a href="contato.html" class="btn-nav active">Fale Conosco</a></li>
+      </ul>
+      <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="quem-somos.html" onclick="toggleMenu()">Quem Somos</a>
+    <a href="formatos.html" onclick="toggleMenu()">Nossos Formatos</a>
+    <a href="cobertura.html" onclick="toggleMenu()">Cobertura</a>
+    <a href="clientes.html" onclick="toggleMenu()">Clientes</a>
+    <a href="contato.html" class="btn-nav-mobile" onclick="toggleMenu()">Fale Conosco</a>
+  </div>
+
+  <div class="page-header">
+    <div class="page-header-inner">
+      <div class="eyebrow">Contato</div>
+      <h1>Vamos conversar.</h1>
+      <p>Entre em contato e descubra como levar sua marca a qualquer lugar do Brasil.</p>
+    </div>
+  </div>
+
+  <!-- CONTATO PRINCIPAL -->
+  <section class="bloco white">
+    <div class="container">
+      <div class="contato-grid">
+
+        <!-- Canais de contato -->
+        <div>
+          <div class="eyebrow">Fale diretamente</div>
+          <h2 class="section-title">Escolha o canal<br />mais rápido.</h2>
+          <p style="font-size:16px; color:var(--cinza-med); line-height:1.8; margin-bottom:32px;">Nossa equipe está disponível para atender agências e anunciantes. Respondemos no mesmo dia.</p>
+
+          <a href="https://wa.me/5591982523057" target="_blank" class="canal-card primary">
+            <div class="canal-icon whatsapp">
+              <svg viewBox="0 0 24 24">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+                <path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.946-1.42A9.956 9.956 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/>
+              </svg>
+            </div>
+            <div class="canal-info">
+              <h3>WhatsApp</h3>
+              <p>Canal mais rápido para agências e anunciantes</p>
+              <div class="valor">(91) 98252-3057</div>
+            </div>
+          </a>
+
+          <a href="mailto:publicarmidiaooh@gmail.com" class="canal-card">
+            <div class="canal-icon email">
+              <svg viewBox="0 0 24 24"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+            </div>
+            <div class="canal-info">
+              <h3>E-mail</h3>
+              <p>Para envio de briefings, PIs e documentos</p>
+              <div class="valor">publicarmidiaooh@gmail.com</div>
+            </div>
+          </a>
+
+          <div class="info-strip">
+            <div class="info-item">
+              <div class="info-item-icon">
+                <svg viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              </div>
+              <div>
+                <h4>Horário de atendimento</h4>
+                <p>Segunda a sexta, das 8h às 18h</p>
+              </div>
+            </div>
+            <div class="info-item">
+              <div class="info-item-icon">
+                <svg viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+              </div>
+              <div>
+                <h4>Base de operação</h4>
+                <p>Belém, PA — Brasil</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Formulário -->
+        <div class="form-wrap">
+          <h3>Solicite uma proposta</h3>
+          <p class="form-sub">Preencha o formulário e nossa equipe retorna em até 24 horas com disponibilidade e valores.</p>
+
+          <form onsubmit="enviarFormulario(event)">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="nome">Nome</label>
+                <input type="text" id="nome" name="nome" placeholder="Seu nome" required />
+              </div>
+              <div class="form-group">
+                <label for="empresa">Empresa / Agência</label>
+                <input type="text" id="empresa" name="empresa" placeholder="Nome da empresa" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="email">E-mail</label>
+              <input type="email" id="email" name="email" placeholder="seu@email.com" required />
+            </div>
+
+            <div class="form-group">
+              <label for="telefone">Telefone / WhatsApp</label>
+              <input type="tel" id="telefone" name="telefone" placeholder="(00) 00000-0000" />
+            </div>
+
+            <div class="form-group">
+              <label for="segmento">Tipo de campanha</label>
+              <select id="segmento" name="segmento">
+                <option value="">Selecione o tipo</option>
+                <option>Institucional</option>
+                <option>Governamental</option>
+                <option>Varejo</option>
+                <option>Serviços</option>
+                <option>Eventos</option>
+                <option>Lançamentos</option>
+                <option>Outro</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="mensagem">Briefing / Mensagem</label>
+              <textarea id="mensagem" name="mensagem" placeholder="Descreva sua campanha: formato desejado, praça, período, objetivo..."></textarea>
+            </div>
+
+            <button type="submit" class="btn-form">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+                <path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.946-1.42A9.956 9.956 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/>
+              </svg>
+              Enviar via WhatsApp →
+            </button>
+            <p class="form-note">Ao clicar, você será direcionado ao WhatsApp com os dados preenchidos. Resposta em até 24 horas úteis.</p>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- POR QUE ESCOLHER -->
+  <section class="bloco bloco-dark">
+    <div class="container">
+      <div class="eyebrow">Por que nos escolher</div>
+      <h2 class="section-title" style="color:var(--branco); margin-bottom:52px;">O que você ganha<br />ao trabalhar com a Publicar Mídia.</h2>
+      <div class="razoes-grid">
+        <div class="razao-item">
+          <div class="razao-num">01</div>
+          <h4>Um único interlocutor</h4>
+          <p>Não importa quantas praças ou formatos. Um PI, uma NF, um contato. Simples assim.</p>
+        </div>
+        <div class="razao-item">
+          <div class="razao-num">02</div>
+          <h4>Execução comprovada</h4>
+          <p>20 anos de mercado com operação real, territorial e rastreável em todo o Brasil.</p>
+        </div>
+        <div class="razao-item">
+          <div class="razao-num">03</div>
+          <h4>Capilaridade regional</h4>
+          <p>Presença real onde outros não chegam — incluindo os 144+ municípios do Pará.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <img src="../imagens de conteudo png/Publicar midia/ChatGPT Image 26 de fev. de 2026, 14_48_48.png" alt="Publicar Mídia OOH" style="filter: brightness(0) invert(1);" />
+          <p class="footer-tagline">Levando o seu sucesso<br />a qualquer lugar do Brasil.</p>
+        </div>
+        <div class="footer-nav">
+          <div class="footer-col">
+            <h4>Navegação</h4>
+            <ul>
+              <li><a href="quem-somos.html">Quem Somos</a></li>
+              <li><a href="formatos.html">Nossos Formatos</a></li>
+              <li><a href="cobertura.html">Cobertura</a></li>
+              <li><a href="clientes.html">Clientes</a></li>
+              <li><a href="contato.html">Contato</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Contato</h4>
+            <ul>
+              <li><a href="https://wa.me/5591982523057" target="_blank">(91) 98252-3057</a></li>
+              <li><a href="mailto:publicarmidiaooh@gmail.com">publicarmidiaooh@gmail.com</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 Publicar Mídia OOH. CNPJ 51.040.875/0001-58</p>
+        <span class="footer-inst">Publicar Mídia OOH | OOH &amp; DOOH | Brasil</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+  <script>
+    function enviarFormulario(e) {
+      e.preventDefault();
+      const nome = document.getElementById('nome').value;
+      const empresa = document.getElementById('empresa').value;
+      const email = document.getElementById('email').value;
+      const telefone = document.getElementById('telefone').value;
+      const segmento = document.getElementById('segmento').value;
+      const mensagem = document.getElementById('mensagem').value;
+
+      const texto = `Olá! Gostaria de solicitar uma proposta.\n\n*Nome:* ${nome}\n*Empresa:* ${empresa}\n*E-mail:* ${email}\n*Telefone:* ${telefone}\n*Tipo de campanha:* ${segmento}\n*Briefing:* ${mensagem}`;
+      const url = `https://wa.me/5591982523057?text=${encodeURIComponent(texto)}`;
+      window.open(url, '_blank');
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nossos Formatos — Publicar Mídia OOH</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css?v=10" />
+  <style>
+    /* TABS DE CATEGORIA */
+    .tabs {
+      display: flex; gap: 8px; flex-wrap: wrap;
+      margin-bottom: 48px; border-bottom: 2px solid var(--borda);
+      padding-bottom: 0;
+    }
+    .tab-btn {
+      padding: 12px 20px; border: none; background: none;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 13px; font-weight: 700; letter-spacing: 0.04em;
+      text-transform: uppercase; color: var(--cinza-med);
+      cursor: pointer; border-bottom: 3px solid transparent;
+      margin-bottom: -2px; transition: color 0.2s, border-color 0.2s;
+    }
+    .tab-btn:hover { color: var(--laranja); }
+    .tab-btn.active { color: var(--laranja); border-bottom-color: var(--laranja); }
+
+    .tab-panel {
+      display: none;
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    .tab-panel.active {
+      display: block;
+      animation: fadeSlideIn 0.30s ease forwards;
+    }
+    @keyframes fadeSlideIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* GRID DE FORMATOS */
+    .formatos-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+
+    .formato-item {
+      background: var(--branco);
+      border: 1px solid var(--borda);
+      border-radius: 4px;
+      overflow: hidden;
+      transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
+    }
+    .formato-item:hover {
+      border-color: var(--laranja);
+      box-shadow: 0 8px 32px rgba(255,140,0,0.12);
+      transform: translateY(-4px);
+    }
+    .formato-item:hover .formato-nome::after {
+      content: ' →';
+      color: var(--laranja);
+    }
+
+    .formato-foto {
+      width: 100%; aspect-ratio: 16/9;
+      background: var(--cinza-bg);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--cinza-cla);
+      border-bottom: 1px solid var(--borda);
+      position: relative;
+    }
+    .formato-foto.accent-bg { background: rgba(255,140,0,0.06); }
+
+    .formato-info { padding: 20px 24px; }
+    .formato-tag {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--laranja); margin-bottom: 8px;
+    }
+    .formato-nome { font-size: 16px; font-weight: 800; color: var(--preto); margin-bottom: 6px; }
+    .formato-desc { font-size: 13px; color: var(--cinza-med); line-height: 1.6; }
+    .formato-badge {
+      display: inline-block; margin-top: 10px;
+      font-size: 10px; font-weight: 700; letter-spacing: 0.10em;
+      text-transform: uppercase; color: var(--laranja);
+      background: rgba(255,140,0,0.10); padding: 4px 10px; border-radius: 20px;
+    }
+
+    /* INDOOR DESTAQUE */
+    .indoor-destaque {
+      background: var(--preto);
+      border-radius: 4px; padding: 40px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
+      align-items: center; margin-top: 48px;
+    }
+    .indoor-destaque h3 { font-size: 24px; font-weight: 800; color: var(--branco); margin-bottom: 12px; }
+    .indoor-destaque p { font-size: 15px; color: rgba(255,255,255,0.60); line-height: 1.7; margin-bottom: 24px; }
+    .indoor-nums { display: flex; gap: 32px; flex-wrap: wrap; }
+    .indoor-num .num { font-size: 40px; font-weight: 800; color: var(--laranja); line-height: 1; }
+    .indoor-num .label { font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.50); letter-spacing: 0.06em; text-transform: uppercase; margin-top: 4px; }
+    .indoor-foto {
+      aspect-ratio: 4/3; background: rgba(255,140,0,0.06);
+      border-radius: 4px; border: 1px solid rgba(255,140,0,0.20);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase; color: rgba(255,255,255,0.20);
+    }
+
+    .disclaimer {
+      text-align: center; margin-top: 48px;
+      font-size: 13px; color: var(--cinza-med); font-style: italic;
+    }
+
+    @keyframes tabOut {
+      from { opacity: 1; transform: translateY(0); }
+      to   { opacity: 0; transform: translateY(-10px); }
+    }
+    .tab-panel.leaving {
+      display: block !important;
+      animation: tabOut 0.18s ease forwards;
+      pointer-events: none;
+    }
+
+    .tab-panel.active .formato-item {
+      animation: cardIn 0.35s ease both;
+    }
+    .tab-panel.active .formato-item:nth-child(1) { animation-delay: 0.05s; }
+    .tab-panel.active .formato-item:nth-child(2) { animation-delay: 0.10s; }
+    .tab-panel.active .formato-item:nth-child(3) { animation-delay: 0.15s; }
+    .tab-panel.active .formato-item:nth-child(4) { animation-delay: 0.20s; }
+    .tab-panel.active .formato-item:nth-child(5) { animation-delay: 0.25s; }
+    .tab-panel.active .formato-item:nth-child(6) { animation-delay: 0.30s; }
+    .tab-panel.active .formato-item:nth-child(7) { animation-delay: 0.35s; }
+    .tab-panel.active .formato-item:nth-child(8) { animation-delay: 0.40s; }
+    .tab-panel.active .formato-item:nth-child(9) { animation-delay: 0.45s; }
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 960px) {
+      .formatos-grid { grid-template-columns: 1fr 1fr; }
+      .indoor-destaque { grid-template-columns: 1fr; gap: 28px; padding: 28px; }
+      .indoor-foto { display: none; }
+      .indoor-nums { gap: 24px; }
+    }
+    @media (max-width: 768px) {
+      .tabs {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        padding-bottom: 2px;
+        margin-bottom: 32px;
+      }
+      .tabs::-webkit-scrollbar { display: none; }
+      .tab-btn { white-space: nowrap; font-size: 12px; padding: 10px 16px; flex-shrink: 0; }
+    }
+    @media (max-width: 480px) {
+      .formatos-grid { grid-template-columns: 1fr; }
+      .tab-btn { font-size: 11px; padding: 10px 13px; }
+      .indoor-destaque { padding: 24px 20px; }
+      .indoor-num .num { font-size: 32px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a class="nav-logo" href="index.html">
+        <img src="../imagens de conteudo png/Publicar midia/ChatGPT Image 26 de fev. de 2026, 14_48_48.png" alt="Publicar Mídia OOH" />
+        <span class="nav-logo-nome">Publicar Mídia <span>OOH</span></span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="quem-somos.html">Quem Somos</a></li>
+        <li><a href="formatos.html" class="active">Nossos Formatos</a></li>
+        <li><a href="cobertura.html">Cobertura</a></li>
+        <li><a href="clientes.html">Clientes</a></li>
+        <li><a href="contato.html" class="btn-nav">Fale Conosco</a></li>
+      </ul>
+      <div class="hamburger" id="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+    </div>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="quem-somos.html" onclick="toggleMenu()">Quem Somos</a>
+    <a href="formatos.html" class="active" onclick="toggleMenu()">Nossos Formatos</a>
+    <a href="cobertura.html" onclick="toggleMenu()">Cobertura</a>
+    <a href="clientes.html" onclick="toggleMenu()">Clientes</a>
+    <a href="contato.html" class="btn-nav-mobile" onclick="toggleMenu()">Fale Conosco</a>
+  </div>
+
+  <div class="page-header">
+    <div class="page-header-inner">
+      <div class="eyebrow">Nossos Formatos</div>
+      <h1>Todos os formatos.<br />Em todo o Brasil.</h1>
+      <p>30+ formatos disponíveis em todo o Brasil — OOH estático, DOOH, mobilidade, regional e indoor.</p>
+    </div>
+  </div>
+
+  <section class="bloco white">
+    <div class="container">
+
+      <div class="tabs">
+        <button class="tab-btn active" onclick="showTab('estatico', this)">OOH Estático</button>
+        <button class="tab-btn" onclick="showTab('dooh', this)">DOOH</button>
+        <button class="tab-btn" onclick="showTab('mobilidade', this)">Mobilidade</button>
+        <button class="tab-btn" onclick="showTab('norte', this)">Formatos Norte</button>
+        <button class="tab-btn" onclick="showTab('indoor', this)">Indoor</button>
+      </div>
+
+      <!-- OOH ESTÁTICO -->
+      <div id="tab-estatico" class="tab-panel active">
+        <div class="formatos-grid">
+          <div class="formato-item">
+            <div class="formato-foto">Inserir foto Outdoor</div>
+            <div class="formato-info">
+              <div class="formato-tag">OOH Estático</div>
+              <div class="formato-nome">Outdoor</div>
+              <div class="formato-desc">Painéis de grande formato em pontos estratégicos de alto fluxo. Alta visibilidade e presença de marca constante.</div>
+            </div>
+          </div>
+          <div class="formato-item">
+            <div class="formato-foto">Inserir foto Front Light</div>
+            <div class="formato-info">
+              <div class="formato-tag">OOH Estático</div>
+              <div class="formato-nome">Front Light</div>
+              <div class="formato-desc">Painel com iluminação frontal, garantindo visibilidade dia e noite em locais de grande circulação.</div>
+            </div>
+          </div>
+          <div class="formato-item">
+            <div class="formato-foto">Inserir foto Empena</div>
+            <div class="formato-info">
+              <div class="formato-tag">OOH Estático</div>
+              <div class="formato-nome">Empena</div>
+              <div class="formato-desc">Paredes de grande formato em edifícios estratégicos. Presença marcante na paisagem urbana.</div>
+            </div>
+          </div>
+          <div class="formato-item">
+            <div class="formato-foto accent-bg">Inserir foto</div>
+            <div class="formato-info">
+              <div class="formato-tag">OOH Estático</div>
+              <div class="formato-nome">Banca de Revista Estática OOH</div>
+              <div class="formato-desc">Mídia em bancas de revista, impactando consumidores em pontos de alta frequência e permanência.</div>
+            </div>
+          </div>
+          <div class="formato-item">
+            <div class="formato-foto accent-bg">Inserir foto</div>
+            <div class="formato-info">
+              <div class="formato-tag">OOH Estático</div>
+              <div class="formato-nome">Placa de Endereçamento</div>
+              <div class="formato-desc">Mídia associada à sinalização urbana. Presença constante no cotidiano da cidade.</div>
+            </div>
+          </div>
+          <div class="formato-item">
+            <div class="formato-foto accent-bg">Inserir foto</div>
+            <div class="formato-info">
+              <div class="formato-tag">OOH Estático</div>
+              <div class="formato-nome">Outdoor Flutuante</div>
+              <div class="formato-desc">Formato exclusivo da Região Norte. Mídia sobre a água nas hidrovias e rios da Amazônia.</div>
+              <span class="formato-badge">Região Norte — Belém/PA</span>
+            </div>
+          </div>
+        </div>
+        <p class="disclaimer">Consulte disponibilidade por praça.</p>
+      </div>
+
+      <!-- DOOH -->
+      <div id="tab-dooh" class="tab-panel">
+        <div class="formatos-grid">
+          <div class="formato-item">
+            <div class="formato-foto">Inserir foto Painel de LED</div>
+            <div class="formato-info">
+              <div class="formato-tag">DOOH</div>
+              <div class="formato-nome">Painel de LED</div>
+              <div class="formato-desc">Telas digitais de alto brilho em diversos formatos e tamanhos. Conteúdo dinâmico com impacto máximo.</div>
+            </div>
+          </div>
+          <div class="formato-item">
+            <div class="formato-foto accent-bg">Inserir foto Mega Telão</div>
+            <div class="formato-info">
+              <div class="formato-tag">DOOH</div>
+              <div class="formato-nome">Mega Telão</div>
+              <div class="formato-desc">Grande formato digital para locais de altíssimo fluxo. Máxima visibilidade e impacto visual.</div>
+            </div>
+          </div>
+          <div class="formato-item">
+            <div class="formato-foto accent-bg">Inserir foto</div>
+            <div class="formato-info">
+              <div class="formato-tag">DOOH</div>
+              <div class="formato-nome">Banca de Revista DOOH</div>
+              <div class="formato-desc">Telas digitais em bancas de revista, combinando alta frequência de público com conteúdo dinâmico.</div>
+            </div>
+          </div>
+          <div class="formato-item">
+            <div class="formato-foto accent-bg">Inserir foto</div>
+            <div class="formato-info">
+              <div class="formato-tag">DOOH</div>
+              <div class="formato-nome">Relógio Urbano Digital</div>
+              <div class="formato-desc">Informação e publicidade integradas ao mobiliário urbano. Alta frequência de consulta e visualização.</div>
+            </div>
+          </div>
+          <div class="formato-item">
+            <div class="formato-foto accent-bg">Inserir foto</div>
+            <div class="formato-info">
+              <div class="formato-tag">DOOH</div>
+              <div class="formato-nome">Bick Light</div>
+              <div class="formato-desc">Mídia digital em formato compacto, estrategicamente posicionado em pontos de grande movimentação.</div>
+            </div>
+          </div>
+        </div>
+        <p class="disclaimer">Consulte disponibilidade por praça.</p>
+      </div>
+
+      <!-- MOBILIDADE -->
+      <div id="tab-mobilidade" class="tab-panel">
+        <div class="formatos-grid">
+          <div class="formato-item">
+            <div class="formato-foto">Inserir foto Busdoor</div>
+            <div class="formato-info">
+              <div class="formato-tag">Mobilidade</div>
+              <div class="formato-nome">Busdoor</div>
+              <div class="formato-desc">Mídia na traseira de ônibus. Audiência em movimento, impactando motoristas e pedestres em toda a cidade.</div>
+            </div>
+          </div>
+          <div class="formato-item">
+            <div class="formato-foto accent-bg">Inserir foto Backbus</div>
+            <div class="formato-info">
+              <div class="formato-tag">Mobilidade</div>
+              <div class="formato-nome">Backbus</div>
+              <div class="formato-desc">Mídia na parte traseira e lateral do ônibus, com maior área de exposição e alcance visual ampliado.</div>
+            </div>
+          </div>
+          <div class="formato-item">
+            <div class="formato-foto accent-bg">Inserir foto</div>
+            <div class="formato-info">
+              <div class="formato-tag">Mobilidade</div>
+              <div class="formato-nome">Backseat</div>
+              <div class="formato-desc">Mídia no encosto do banco do passageiro. Alta atenção e tempo de exposição elevado dentro do veículo.</div>
+            </div>
+          </div>
+          <div class="formato-item">
+            <div class="formato-foto accent-bg">Inserir foto</div>
+            <div class="formato-info">
+              <div class="formato-tag">Mobilidade</div>
+              <div class="formato-nome">Taxidoor</div>
+              <div class="formato-desc">Mídia em táxis e veículos de aplicativo. Presença em regiões de alto poder aquisitivo e grande mobilidade.</div>
+            </div>
+          </div>
+          <div class="formato-item">
+            <div class="formato-foto accent-bg">Inserir foto</div>
+            <div class="formato-info">
+              <div class="formato-tag">Mobilidade</div>
+              <div class="formato-nome">Truckdoor</div>
+              <div class="formato-desc">Mídia em caminhões e veículos de carga. Alta visibilidade nas principais rodovias e centros de distribuição.</div>
+            </div>
+          </div>
+          <div class="formato-item">
+            <div class="formato-foto accent-bg">Inserir foto</div>
+            <div class="formato-info">
+              <div class="formato-tag">Mobilidade</div>
+              <div class="formato-nome">Bikedoor</div>
+              <div class="formato-desc">Mídia em bicicletas e ciclomotores. Presença em áreas de difícil acesso para outros formatos.</div>
+            </div>
+          </div>
+          <div class="formato-item">
+            <div class="formato-foto accent-bg">Inserir foto</div>
+            <div class="formato-info">
+              <div class="formato-tag">Mobilidade</div>
+              <div class="formato-nome">Carro Som</div>
+              <div class="formato-desc">Comunicação sonora e visual em movimento. Cobertura ampla em diferentes praças do Brasil.</div>
+            </div>
+          </div>
+          <div class="formato-item">
+            <div class="formato-foto accent-bg">Inserir foto</div>
+            <div class="formato-info">
+              <div class="formato-tag">Mobilidade</div>
+              <div class="formato-nome">Plotagem em Ônibus Intermunicipal</div>
+              <div class="formato-desc">Adesivagem em ônibus intermunicipais (sem passageiros). Grande área de exposição nas estradas e cidades do interior.</div>
+            </div>
+          </div>
+          <div class="formato-item">
+            <div class="formato-foto accent-bg">Inserir foto</div>
+            <div class="formato-info">
+              <div class="formato-tag">Mobilidade</div>
+              <div class="formato-nome">Carrinho de Mercado</div>
+              <div class="formato-desc">Mídia no carrinho de supermercado. Impacto direto no momento de decisão de compra. Brasil todo.</div>
+            </div>
+          </div>
+        </div>
+        <p class="disclaimer">Consulte disponibilidade por praça.</p>
+      </div>
+
+      <!-- FORMATOS NORTE -->
+      <div id="tab-norte" class="tab-panel">
+        <div class="formatos-grid">
+          <div class="formato-item">
+            <div class="formato-foto">Inserir foto Lanchadoor</div>
+            <div class="formato-info">
+              <div class="formato-tag">Formatos Regionais</div>
+              <div class="formato-nome">Lanchadoor</div>
+              <div class="formato-desc">Mídia em embarcações que circulam pelos rios e baías de Belém. Formato único, exclusivo da região amazônica.</div>
+              <span class="formato-badge">Belém / PA</span>
+            </div>
+          </div>
+          <div class="formato-item">
+            <div class="formato-foto accent-bg">Inserir foto Barcodoor</div>
+            <div class="formato-info">
+              <div class="formato-tag">Formatos Regionais</div>
+              <div class="formato-nome">Barcodoor</div>
+              <div class="formato-desc">Mídia em barcos e embarcações de transporte de passageiros. Presença nas rotas fluviais mais movimentadas da Amazônia.</div>
+              <span class="formato-badge">Belém / PA</span>
+            </div>
+          </div>
+        </div>
+        <p style="margin-top: 32px; font-size: 15px; color: var(--cinza-med); line-height: 1.7;">
+          Os formatos regionais Norte são exclusivos da Publicar Mídia OOH para a Região Amazônica. Aproveitamos a característica única da mobilidade fluvial de Belém e do Pará para oferecer mídias que nenhum outro veículo consegue alcançar.
+        </p>
+        <p class="disclaimer">Consulte disponibilidade por praça.</p>
+      </div>
+
+      <!-- INDOOR -->
+      <div id="tab-indoor" class="tab-panel">
+        <div class="formatos-grid">
+          <div class="formato-item">
+            <div class="formato-foto">Inserir foto Shopping</div>
+            <div class="formato-info">
+              <div class="formato-tag">Indoor</div>
+              <div class="formato-nome">Shopping — Mega Telão e Telas Digitais</div>
+              <div class="formato-desc">Presença em shoppings com telas de grande formato e painéis digitais estrategicamente posicionados. Brasil todo.</div>
+            </div>
+          </div>
+          <div class="formato-item">
+            <div class="formato-foto accent-bg">Inserir foto Elevador</div>
+            <div class="formato-info">
+              <div class="formato-tag">Indoor</div>
+              <div class="formato-nome">Elevadores Comerciais e Residenciais</div>
+              <div class="formato-desc">Telas digitais instaladas em elevadores de prédios comerciais e residenciais. Audiência cativa com alta frequência de exposição.</div>
+            </div>
+          </div>
+        </div>
+        <div class="indoor-destaque">
+          <div>
+            <h3>Escala Indoor no Brasil</h3>
+            <p>Nossa rede de telas Indoor cobre as principais cidades brasileiras, com destaque para Belém, onde temos mais de 120 telas instaladas em edifícios comerciais e residenciais.</p>
+            <div class="indoor-nums">
+              <div class="indoor-num">
+                <div class="num">+120</div>
+                <div class="label">telas em Belém</div>
+              </div>
+              <div class="indoor-num">
+                <div class="num">+3.000</div>
+                <div class="label">telas no Brasil</div>
+              </div>
+            </div>
+          </div>
+          <div class="indoor-foto">Inserir foto tela indoor</div>
+        </div>
+        <p class="disclaimer">Consulte disponibilidade por praça.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="bloco-sm gray" style="text-align: center;">
+    <div class="container">
+      <h2 class="section-title">Encontrou o formato ideal?</h2>
+      <p class="section-sub" style="margin: 0 auto 36px;">Entre em contato e monte sua campanha com a gente. Um interlocutor, todos os formatos.</p>
+      <a href="contato.html" class="btn-primary">Solicitar proposta →</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <img src="../imagens de conteudo png/Publicar midia/ChatGPT Image 26 de fev. de 2026, 14_48_48.png" alt="Publicar Mídia OOH" style="filter: brightness(0) invert(1);" />
+          <p class="footer-tagline">Levando o seu sucesso<br />a qualquer lugar do Brasil.</p>
+        </div>
+        <div class="footer-nav">
+          <div class="footer-col">
+            <h4>Navegação</h4>
+            <ul>
+              <li><a href="quem-somos.html">Quem Somos</a></li>
+              <li><a href="formatos.html">Nossos Formatos</a></li>
+              <li><a href="cobertura.html">Cobertura</a></li>
+              <li><a href="clientes.html">Clientes</a></li>
+              <li><a href="contato.html">Contato</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Contato</h4>
+            <ul>
+              <li><a href="https://wa.me/5591982523057" target="_blank">(91) 98252-3057</a></li>
+              <li><a href="mailto:publicarmidiaooh@gmail.com">publicarmidiaooh@gmail.com</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 Publicar Mídia OOH. CNPJ 51.040.875/0001-58</p>
+        <span class="footer-inst">Publicar Mídia OOH | OOH &amp; DOOH | Brasil</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+  <script>
+    function showTab(id, btn) {
+      const current = document.querySelector('.tab-panel.active');
+      if (!current || current.id === 'tab-' + id) return;
+      current.classList.add('leaving');
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      setTimeout(() => {
+        current.classList.remove('active', 'leaving');
+        document.getElementById('tab-' + id).classList.add('active');
+      }, 180);
+    }
+  </script>
+</body>
+</html>

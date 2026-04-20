@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Publicar Mídia OOH — OOH & DOOH | Brasil</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css?v=11" />
+  <style>
+    body { background: #3A3A3A !important; }
+    section.bloco.gray { background: #3A3A3A; color: var(--branco); }
+    section.bloco.gray .section-title { color: var(--branco); }
+    section.bloco.gray .section-sub { color: rgba(255,255,255,0.60); }
+    section.bloco.gray .eyebrow { color: var(--laranja); }
+    section.bloco.white { background: #2E2E2E; color: var(--branco); }
+    section.bloco.white .section-title { color: var(--branco); }
+    section.bloco.white .section-sub { color: rgba(255,255,255,0.60); }
+    section.bloco.white .eyebrow { color: var(--laranja); }
+    section.bloco.white .sobre-teaser p { color: rgba(255,255,255,0.60); }
+    section.bloco.white .sobre-teaser p strong { color: var(--branco); }
+    section.bloco.white .stat-label { color: rgba(255,255,255,0.60); }
+
+    /* ─── HERO ─── */
+    #hero {
+      min-height: 100vh;
+      background: var(--preto);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      padding-top: 72px;
+    }
+    .hero-video {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center;
+      z-index: 0;
+    }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,0.62);
+      z-index: 1;
+    }
+    .hero-glow {
+      position: absolute;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(255,140,0,0.10) 0%, transparent 70%);
+      top: -100px; right: -100px;
+      z-index: 1;
+    }
+    .hero-content {
+      position: relative; z-index: 2;
+      max-width: 1280px; margin: 0 auto;
+      padding: 100px 64px 120px;
+    }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 12px; font-weight: 700; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--laranja); margin-bottom: 28px;
+    }
+    .hero-eyebrow::before { content: ''; display: block; width: 32px; height: 2px; background: var(--laranja); }
+    .hero-h1 {
+      font-size: clamp(42px, 6.5vw, 76px);
+      font-weight: 800; color: var(--branco);
+      line-height: 1.08; max-width: 760px; margin-bottom: 24px;
+    }
+    .hero-h1 span { color: var(--laranja); }
+    .hero-sub {
+      font-size: 18px; color: rgba(255,255,255,0.65);
+      max-width: 540px; line-height: 1.75; margin-bottom: 48px;
+    }
+    .hero-strip {
+      position: absolute; bottom: 0; left: 0; right: 0; z-index: 3;
+      background: rgba(255,140,0,0.08);
+      border-top: 1px solid rgba(255,140,0,0.20);
+      padding: 18px 40px;
+    }
+    .hero-strip-inner {
+      max-width: 1280px; margin: 0 auto;
+      display: flex; align-items: center; gap: 48px; flex-wrap: wrap;
+    }
+    .strip-item {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 13px; font-weight: 600;
+      color: rgba(255,255,255,0.65); letter-spacing: 0.04em;
+    }
+    .strip-item::before {
+      content: ''; display: block;
+      width: 6px; height: 6px; border-radius: 50%; background: var(--laranja); flex-shrink: 0;
+    }
+
+    /* ─── HOME PREVIEW CARDS ─── */
+    .preview-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .preview-card {
+      background: var(--branco);
+      border-radius: 4px;
+      border-top: 3px solid var(--laranja);
+      padding: 36px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+      text-decoration: none;
+      display: block;
+      transition: box-shadow 0.25s, transform 0.25s;
+    }
+    .preview-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.10); transform: translateY(-3px); }
+    .preview-card .cat {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--laranja); margin-bottom: 10px;
+    }
+    .preview-card h3 { font-size: 20px; font-weight: 800; color: var(--preto); margin-bottom: 12px; }
+    .preview-card p { font-size: 14px; color: var(--cinza-med); line-height: 1.65; margin-bottom: 24px; }
+    .preview-card .link {
+      font-size: 13px; font-weight: 700; color: var(--laranja);
+      letter-spacing: 0.04em; text-transform: uppercase;
+    }
+
+    /* ─── SOBRE TEASER ─── */
+    .sobre-teaser {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 80px; align-items: center;
+    }
+    .sobre-teaser p { font-size: 16px; color: var(--cinza-med); line-height: 1.8; margin-bottom: 16px; }
+    .sobre-teaser p strong { color: var(--preto); font-weight: 700; }
+    .sobre-stats { display: flex; gap: 40px; margin-top: 40px; flex-wrap: wrap; }
+
+    .sobre-visual-home {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+    }
+    .vis-block {
+      background: var(--cinza-bg);
+      border-radius: 4px;
+      aspect-ratio: 1;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--cinza-cla);
+      border: 1px dashed var(--borda);
+      position: relative; overflow: hidden;
+    }
+    .vis-block.accent { background: rgba(255,140,0,0.08); border-color: rgba(255,140,0,0.25); }
+    .vis-block.dark { background: var(--preto); color: rgba(255,255,255,0.20); }
+
+    /* ─── CTA STRIP ─── */
+    .cta-strip {
+      background: var(--laranja);
+      padding: 64px 40px;
+      text-align: center;
+    }
+    .cta-strip h2 { font-size: clamp(24px, 3vw, 36px); font-weight: 800; color: var(--branco); margin-bottom: 12px; }
+    .cta-strip p { font-size: 17px; color: rgba(255,255,255,0.80); margin-bottom: 36px; }
+    .btn-cta-white {
+      background: var(--branco); color: var(--laranja);
+      padding: 16px 36px; border-radius: 4px;
+      font-weight: 800; font-size: 14px; letter-spacing: 0.04em;
+      text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+      transition: opacity 0.2s;
+    }
+    .btn-cta-white:hover { opacity: 0.90; }
+
+    @media (max-width: 960px) {
+      .preview-grid { grid-template-columns: 1fr 1fr; }
+      .sobre-teaser { grid-template-columns: 1fr; gap: 40px; }
+      .sobre-visual-home { display: none; }
+      .hero-content { padding: 80px 32px 110px; }
+      .hero-strip { padding: 14px 32px; }
+      .hero-strip-inner { gap: 20px; }
+    }
+    @media (max-width: 768px) {
+      .preview-grid { grid-template-columns: 1fr; }
+      .hero-content { padding: 72px 24px 100px; }
+      .hero-strip { padding: 12px 24px; }
+      .hero-sub { font-size: 16px; }
+      .sobre-stats { gap: 24px; }
+    }
+    @media (max-width: 480px) {
+      .hero-content { padding: 64px 20px 90px; }
+      .hero-strip { padding: 12px 20px; }
+      .hero-strip-inner { gap: 14px; flex-direction: column; }
+      .strip-item { font-size: 12px; }
+      .cta-strip { padding: 48px 20px; }
+      .cta-strip h2 { font-size: 22px; }
+      .cta-strip p { font-size: 14px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a class="nav-logo" href="index.html">
+        <img src="../imagens de conteudo png/Publicar midia/ChatGPT Image 26 de fev. de 2026, 14_48_48.png" alt="Publicar Mídia OOH" />
+        <span class="nav-logo-nome">Publicar Mídia <span>OOH</span></span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="quem-somos.html">Quem Somos</a></li>
+        <li><a href="formatos.html">Nossos Formatos</a></li>
+        <li><a href="cobertura.html">Cobertura</a></li>
+        <li><a href="clientes.html">Clientes</a></li>
+        <li><a href="contato.html" class="btn-nav">Fale Conosco</a></li>
+      </ul>
+      <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="quem-somos.html" onclick="toggleMenu()">Quem Somos</a>
+    <a href="formatos.html" onclick="toggleMenu()">Nossos Formatos</a>
+    <a href="cobertura.html" onclick="toggleMenu()">Cobertura</a>
+    <a href="clientes.html" onclick="toggleMenu()">Clientes</a>
+    <a href="contato.html" class="btn-nav-mobile" onclick="toggleMenu()">Fale Conosco</a>
+  </div>
+
+  <!-- HERO -->
+  <div id="hero">
+    <video class="hero-video" autoplay muted loop playsinline>
+      <source src="../imagens de conteudo png/time square.mp4" type="video/mp4" />
+    </video>
+    <div class="hero-overlay"></div>
+    <div class="hero-glow"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">OOH &amp; DOOH | Brasil</div>
+      <h1 class="hero-h1">Sua marca onde<br /><span>o Brasil vive.</span></h1>
+      <p class="hero-sub">
+        Plataforma nacional de mídia exterior com presença real em todo o território brasileiro.
+        Um interlocutor. Todos os formatos. Uma única nota fiscal.
+      </p>
+      <div class="btn-group">
+        <a href="formatos.html" class="btn-primary">Conheça nossos formatos →</a>
+        <a href="contato.html" class="btn-outline-white">Fale com a gente</a>
+      </div>
+    </div>
+    <div class="hero-strip">
+      <div class="hero-strip-inner">
+        <div class="strip-item">20 anos de mercado</div>
+        <div class="strip-item">144+ municípios no Pará</div>
+        <div class="strip-item">OOH e DOOH integrados</div>
+        <div class="strip-item">Presença em todo o Brasil</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PREVIEW CARDS -->
+  <section class="bloco gray">
+    <div class="container">
+      <div class="eyebrow">O que fazemos</div>
+      <h2 class="section-title">Tudo em um só lugar.</h2>
+      <p class="section-sub">Para agências e anunciantes, somos o único ponto de contato para todas as praças e todos os formatos de mídia exterior no Brasil.</p>
+      <div class="preview-grid">
+        <a href="formatos.html" class="preview-card">
+          <div class="cat">Formatos</div>
+          <h3>30+ formatos de mídia</h3>
+          <p>De outdoor a DOOH, de busdoor a lanchadoor. Todos os formatos OOH disponíveis em uma única plataforma.</p>
+          <span class="link">Ver todos os formatos →</span>
+        </a>
+        <a href="cobertura.html" class="preview-card">
+          <div class="cat">Cobertura</div>
+          <h3>Do Norte ao Sul do Brasil</h3>
+          <p>Presença territorial real em todo o país. Destaque para os 144+ municípios do Pará — do interior à capital.</p>
+          <span class="link">Ver cobertura →</span>
+        </a>
+        <a href="clientes.html" class="preview-card">
+          <div class="cat">Campanhas</div>
+          <h3>Todos os segmentos</h3>
+          <p>Atendemos campanhas institucionais, governamentais, varejo, serviços, eventos e lançamentos.</p>
+          <span class="link">Ver clientes →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOBRE TEASER -->
+  <section class="bloco white">
+    <div class="container">
+      <div class="sobre-teaser">
+        <div>
+          <div class="eyebrow">Quem Somos</div>
+          <h2 class="section-title">Uma plataforma.<br />Todo o Brasil.</h2>
+          <p>Há <strong>20 anos</strong> conectamos marcas às pessoas no cotidiano das cidades brasileiras. Operamos mídia OOH e DOOH de forma real, territorial e urbana.</p>
+          <p>Para agências, somos um <strong>único interlocutor</strong> para todas as praças e todos os formatos. Um PI. Uma NF. Zero burocracia.</p>
+          <div class="sobre-stats">
+            <div class="stat-item">
+              <div class="stat-num">20</div>
+              <div class="stat-label">anos de mercado</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-num">144+</div>
+              <div class="stat-label">municípios no Pará</div>
+            </div>
+          </div>
+          <div style="margin-top: 40px;">
+            <a href="quem-somos.html" class="btn-primary">Conheça nossa história →</a>
+          </div>
+        </div>
+        <div class="sobre-visual-home">
+          <div class="vis-block">Foto urbana</div>
+          <div class="vis-block accent"></div>
+          <div class="vis-block dark"></div>
+          <div class="vis-block">Foto painel</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA STRIP -->
+  <div class="cta-strip">
+    <h2>Pronto para levar sua marca a qualquer lugar?</h2>
+    <p>Entre em contato e descubra como a Publicar Mídia OOH pode atender sua campanha.</p>
+    <a href="contato.html" class="btn-cta-white">Fale com a gente →</a>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <img src="../imagens de conteudo png/Publicar midia/ChatGPT Image 26 de fev. de 2026, 14_48_48.png" alt="Publicar Mídia OOH" style="filter: brightness(0) invert(1);" />
+          <p class="footer-tagline">Levando o seu sucesso<br />a qualquer lugar do Brasil.</p>
+        </div>
+        <div class="footer-nav">
+          <div class="footer-col">
+            <h4>Navegação</h4>
+            <ul>
+              <li><a href="quem-somos.html">Quem Somos</a></li>
+              <li><a href="formatos.html">Nossos Formatos</a></li>
+              <li><a href="cobertura.html">Cobertura</a></li>
+              <li><a href="clientes.html">Clientes</a></li>
+              <li><a href="contato.html">Contato</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Contato</h4>
+            <ul>
+              <li><a href="https://wa.me/5591982523057" target="_blank">(91) 98252-3057</a></li>
+              <li><a href="mailto:publicarmidiaooh@gmail.com">publicarmidiaooh@gmail.com</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 Publicar Mídia OOH. CNPJ 51.040.875/0001-58</p>
+        <span class="footer-inst">Publicar Mídia OOH | OOH &amp; DOOH | Brasil</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
